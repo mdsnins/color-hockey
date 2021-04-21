@@ -1,0 +1,20 @@
+version: '3'
+services:
+  backend:
+    container_name: ch_back
+    ports:
+      - "3000:3000"
+    build:
+      context: ./backend/
+    environment:
+      BACK_HOST: "localhost:3000"
+      FRONT_HOST: "localhost"
+  frontend:
+    container_name: ch_front
+    ports:
+      - "80:80"
+    build:
+      context: ./frontend
+    environment:
+      BACK_HOST: "localhost:3000"
+      FRONT_HOST: "localhost"
