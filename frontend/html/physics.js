@@ -62,9 +62,12 @@ function collideVertical(physObj) {
     physObj.speed.y = -physObj.speed.y * physObj.eleastic_coeff;
 }
 
+function isCollision(physObj1, physObj2) {
+    //Determine wheter two object has collided or not
+    //TODO: Implement
+}
 
 // Register global functions
-
 function updatePhysicalWorld() {
     PhysicalWorld.forEach(obj => {
         //TODO:  Update object status here
