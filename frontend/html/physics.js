@@ -40,6 +40,16 @@ class Puck extends PhysicalObject{
 const PhysicalWorld = Array();  //All physical objects should be registered here
 const PhysicalFreq = 10;        //Physical matter update frequency
 
+function registerPhysicalObject(physObj) {
+    PhysicalWorld.push(physObj);
+}
+
+function unregisterPhysicalObject(physObj) {
+    let index = PhysicalWorld.indexOf(physObj);
+    if(index > -1)
+        PhysicalWorld.splice(index, 1);
+}
+
 function collideHorizontal(physObj) {
     //Implementation of collision of fixed vertical wall and physical object
     physObj.acceleration.x = -physObj.acceleration.x;
