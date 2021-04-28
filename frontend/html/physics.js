@@ -71,3 +71,5 @@ function updatePhysicalWorld() {
     });
     //TODO: Detect collision and update status here
 }
+
+setInterval(updatePhysicalWorld, 1000/PhysicalFreq); //Register interval
