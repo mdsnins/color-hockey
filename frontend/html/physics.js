@@ -61,3 +61,13 @@ function collideVertical(physObj) {
     physObj.acceleration.y = -physObj.acceleration.y;
     physObj.speed.y = -physObj.speed.y * physObj.eleastic_coeff;
 }
+
+
+// Register global functions
+
+function updatePhysicalWorld() {
+    PhysicalWorld.forEach(obj => {
+        //TODO:  Update object status here
+    });
+    //TODO: Detect collision and update status here
+}
