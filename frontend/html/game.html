@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Color Hockey</title>
+        <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+        <script src="static/js/game.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="static/css/default.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <br />
+            <h5 id="g_inv" class="text-danger">Game Invitation Received! (from <span id="b_user"></span>)&nbsp;&nbsp;&nbsp;<a href="#" id="b_accept" data-id="">Go!</a> &nbsp;|&nbsp; <a href="#" id="b_refuse">Nope</a></h5>
+            <br />
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="nav-main-tab" data-bs-toggle="tab" data-bs-target="#nav-main" type="button" role="tab" aria-controls="nav-main" aria-selected="true">Waiting List</button>
+                  <button class="nav-link" id="nav-mapedit-tab" data-bs-toggle="tab" data-bs-target="#nav-mapedit" type="button" role="tab" aria-controls="nav-mapedit" aria-selected="false">My Map</button>
+                  <button class="nav-link" id="nav-mypage-tab" data-bs-toggle="tab" data-bs-target="#nav-mypage" type="button" role="tab" aria-controls="nav-mypage" aria-selected="false">Mypage</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-main" role="tabpanel" aria-labelledby="nav-main-tab">
+                    <div class="row user-list" id="user_list">
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-mapedit" role="tabpanel" aria-labelledby="nav-mapedit-tab">def</div>
+                <div class="tab-pane fade" id="nav-mypage" role="tabpanel" aria-labelledby="nav-mypage-tab">
+                    <br />
+                    <p>
+                        <strong>Username: </strong> <span id="u_name">NONE</span><br />
+                        <strong>Statistic: </strong> Win = <span id="u_win">NONE</span> | Lose = <span id="u_lose">NONE</span><br />
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <script src="static/js/socket.js"></script>
+        <script>
+            $(() => {
+                $("#g_inv").hide();
+                let username = getUser();
+                if(!username)
+                    location.href = "index.html";
+                connect(username);
+
+
+                $('body').on('click', 'button.battle', function() {
+                    sendInvitation(socket, $(this).data("id"));
+                });
+
+                $("#b_refuse").click(() => {
+                    $("#g_inv").hide();
+                })
+                $("#b_accept").click(function() {
+                    $("#g_inv").hide();
+                    acceptInvitation(socket, $(this).data("id"));
+                })
+            });
+        </script>
+    </body>
+</html>
