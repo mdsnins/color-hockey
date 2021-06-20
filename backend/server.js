@@ -123,7 +123,10 @@ io.sockets.on("connection", (socket) => {
         }
 
         socket.ingame = true;
+        socket.ingame_opponent = host.id;
+
         host.ingame = true;
+        host.ingame_opponent = socket.id;
         
         let data = {
             "game": {
@@ -170,12 +173,39 @@ io.sockets.on("connection", (socket) => {
         }
     })
 
+    socket.on("load map", () => {
+        if (!socket.valid) {
+            socket.emit("error", "auth error");
+            return;
+        }
+        
+        socket.emit("saved map", socket.room.map);
+    });
+
     socket.on("save map", (map) => {
         if (!socket.valid) {
             socket.emit("error", "auth error");
             return;
         }
-        socket.room.map = map;        
+        socket.room.map = map;
+    })
+
+    socket.on("move", (data) => {
+        if(!socket.ingame) {
+            socket.emit("error", `wrong request`);
+            return;
+        }
+
+        players[socket.ingame_opponent].emit("opponent move", data);
+    })
+
+    socket.on("game", (data) => {
+        if(!socket.ingame) {
+            socket.emit("error", `wrong request`);
+            return;
+        }
+
+        players[socket.ingame_opponent].emit("update physics", data);
     })
 });
 
